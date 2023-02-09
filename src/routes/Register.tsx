@@ -13,6 +13,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errMessage, setErrMessage] = useState<string | undefined>(undefined);
   const { isLoggedIn } = useContext(AuthContext);
+  
 
   const initialValues = {
     username: "",
@@ -35,13 +36,14 @@ const Register = () => {
     authService
       .register(username, email, password)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         //swal
-        nav("/");
+        nav("/login");
       })
       .catch((e) => {
         console.log(e);
-        setErrMessage(e);
+        alert(e); //swal //modal
+        setErrMessage(JSON.stringify(e.response.data));
       })
       .finally(() => {
         setIsLoading(false);
