@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3001/api/auth/";
+const baseUrl = "http://localhost:3001/api/auth";
 
 const register = (username: string, email: string, password: string) => {
-  return axios.post(baseUrl + "/register", { username, email, password });
+  return axios.post(baseUrl + "/signup", { username, email, password });
 };
 
 const login = (email: string, password: string) => {

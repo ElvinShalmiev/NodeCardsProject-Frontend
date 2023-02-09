@@ -1,14 +1,17 @@
 import { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { RegisterFormType } from "../@types";
 import AuthContext from "../context/AuthContext";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ColorRing } from "react-loader-spinner";
+import authService from "../services/auth.service";
 
 const Register = () => {
+  const nav = useNavigate();
   //prevent double submit:
   const [isLoading, setIsLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState<string | undefined>(undefined);
   const { isLoggedIn } = useContext(AuthContext);
 
   const initialValues = {
@@ -28,16 +31,28 @@ const Register = () => {
   const handleRegister = (formValues: RegisterFormType) => {
     setIsLoading(true);
 
-    //fetch axios /register
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000000000);
+    const { username, email, password } = formValues;
+    authService
+      .register(username, email, password)
+      .then((res) => {
+        console.log(res);
+        //swal
+        nav("/");
+      })
+      .catch((e) => {
+        console.log(e);
+        setErrMessage(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   if (isLoggedIn) {
     return <Navigate to="/" />;
   }
   return (
     <div>
+      {errMessage && <div>${errMessage}</div>}
       {isLoading && (
         <div className="mx-auto w-25">
           <ColorRing
@@ -106,7 +121,11 @@ const Register = () => {
             />
           </div>
           <div className="col-12">
-            <button disabled={isLoading} className="btn btn-primary" type="submit">
+            <button
+              disabled={isLoading}
+              className="btn btn-primary"
+              type="submit"
+            >
               Register
             </button>
           </div>
