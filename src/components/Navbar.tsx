@@ -9,10 +9,13 @@ const Navabar = () => {
       <NavLink to="/about">About</NavLink>
       <NavLink to="/">Home</NavLink>
 
-      {isLoggedIn && <NavLink to="/register">Register</NavLink>}
-      {isLoggedIn && <NavLink to="/login">Login</NavLink>}
+      {!isLoggedIn && <NavLink to="/register">Register</NavLink>}
+      {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
     </nav>
   );
 };
 
 export default Navabar
+
+// npm i bootstrap sass formik yup react-router-dom react-icons 
+// npm i react-modal sweetalert2 react-bootstrap react-toastify react-loader-spinner axios
