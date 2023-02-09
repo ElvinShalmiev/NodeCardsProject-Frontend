@@ -6,7 +6,7 @@ const Navabar = () => {
   const {isLoggedIn} = useContext(AuthContext)
   return (
     <nav>
-      <NavLink to="/about">About</NavLink>
+      {isLoggedIn && <NavLink to="/about">About</NavLink>}
       <NavLink to="/">Home</NavLink>
 
       {!isLoggedIn && <NavLink to="/register">Register</NavLink>}
