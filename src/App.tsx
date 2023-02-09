@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Navabar from "./components/Navabar";
+import Navabar from "./components/Navbar";
 import AuthContext from "./context/AuthContext";
 import About from "./routes/About";
 import Home from "./routes/Home";
