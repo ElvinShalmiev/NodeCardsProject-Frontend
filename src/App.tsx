@@ -1,58 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useContext } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Navabar from "./components/Navabar";
+import AuthContext from "./context/AuthContext";
+import About from "./routes/About";
+import Home from "./routes/Home";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
 
 function App() {
+  const {isLoggedIn} = useContext(AuthContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Navabar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        {!isLoggedIn && <Route path="/login" element={<Login />} />}
+        {!isLoggedIn && <Route path="/register" element={<Register />} />}
+      </Routes>
+    </>
   );
 }
 
 export default App;
+/* import { useEffect } from "react";
+import "./App.css";
+
+function App() {
+  useEffect(() => {
+    fetch("http://localhost:3001/api/auth/signin", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({
+        email: "Batman@gmail.com",
+        password: "123456aA!",
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+  return <div className="App"></div>;
+}
+
+export default App;
+
+
+//AVATAR// HOW TO USE THE TOKEN //VALIDATIONS
+//DEPLOYMENT */
